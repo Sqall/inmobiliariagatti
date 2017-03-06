@@ -1,0 +1,133 @@
+extends layout
+
+block content
+ div.row
+  if !lote
+   if !arrendamiento
+    div.col-lg-3
+     ul.buscador.margin-top-10
+      if propiedad
+       li
+        a(href="/propiedades/buscar/propiedad/Departamento") Departamento
+       li
+        a(href="/propiedades/buscar/propiedad/Duplex") Duplex
+       li
+        a(href="/propiedades/buscar/propiedad/Casa") Casa
+       li
+        a(href="/propiedades/buscar/propiedad/Chalet") Chalet
+       li
+        a(href="/propiedades/buscar/propiedad/Local") Local
+       li
+        a(href="/propiedades/buscar/propiedad/Galpon") Galpon
+       li
+        a(href="/propiedades/buscar/propiedad/Oficina") Oficina
+      if alquiler
+       li
+        a(href="/propiedades/buscar/alquiler/Departamento") Departamento
+       li
+        a(href="/propiedades/buscar/alquiler/Duplex") Duplex
+       li
+        a(href="/propiedades/buscar/alquiler/Casa") Casa
+       li
+        a(href="/propiedades/buscar/alquiler/Chalet") Chalet
+       li
+        a(href="/propiedades/buscar/alquiler/Local") Local
+       li
+        a(href="/propiedades/buscar/alquiler/Galpon") Galpon
+       li
+        a(href="/propiedades/buscar/alquiler/Oficina") Oficina
+      if campo
+       li
+        a(href="/propiedades/buscar/campo/Quinta") Quintas
+       li
+        a(href="/propiedades/buscar/campo/Estancia") Estancias
+       li
+        a(href="/propiedades/buscar/campo/Chacra") Chacras
+      if cate == "campo"
+       li
+        a(href="/propiedades/buscar/campo/Quinta") Quintas
+        if sub == "Quinta"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/campo/Estancia") Estancias
+        if sub == "Estancia"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/campo/Chacra") Chacras
+        if sub == "Chacra"
+         span.glyphicon.glyphicon-arrow-right
+      if cate == "propiedad"
+       li
+        a(href="/propiedades/buscar/propiedad/Departamento") Departamento
+        if sub == "Departamento"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/propiedad/Duplex") Duplex
+        if sub == "Duplex"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/propiedad/Casa") Casa
+        if sub == "Casa"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/propiedad/Chalet") Chalet
+        if sub == "Chalet"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/propiedad/Local") Local
+        if sub == "Local"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/propiedad/Galpon") Galpon
+        if sub == "Galpon"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/propiedad/Oficina") Oficina
+        if sub == "Oficina"
+         span.glyphicon.glyphicon-arrow-right
+      if cate == "alquiler"
+       li
+        a(href="/propiedades/buscar/alquiler/Departamento") Departamento
+        if sub == "Departamento"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/alquiler/Duplex") Duplex
+        if sub == "Duplex"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/alquiler/Casa") Casa
+        if sub == "Casa"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/alquiler/Chalet") Chalet
+        if sub == "Chalet"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/alquiler/Local") Local
+        if sub == "Local"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/alquiler/Galpon") Galpon
+        if sub == "Galpon"
+         span.glyphicon.glyphicon-arrow-right
+       li
+        a(href="/propiedades/buscar/alquiler/Oficina") Oficina
+        if sub == "Oficina"
+         span.glyphicon.glyphicon-arrow-right
+  div.col-lg-9
+   if (propiedades)
+    each propiedad, i in propiedades
+     a(href='/propiedades/mostrar/#{propiedad._id}')
+      div(class="boxinfo")
+       .propiedad
+        if propiedad.imagenes.length !=0
+         img.img-responsive(src="/imgpropiedades/#{propiedad.imagenes[0]}")
+        else
+         img.img-responsive(src="/images/no-image.png")
+        p.subtitulo <strong>Direccion:</strong> #{propiedad.direccion}
+        p.subtitulo <strong>Tipo:</strong> #{propiedad.subcategoria}
+        p.subtitulo <strong>Precio:</strong> #{propiedad.precio} $
+    if (propiedades.length == 0)
+     p Lo sentimos, no hay propiedades de la categoria elegida.
+   else
+    p Lo sentimos, no hay propiedades de la categoria elegida.
