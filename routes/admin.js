@@ -94,7 +94,7 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 		else{
 			console.log(propiedad);
 			for (var i = propiedad.imagenes.length - 1; i >= 0; i--) {
-				fs.unlink('./public/imgpropiedades/'+propiedad.imagenes[i], (err) => {
+				fs.unlink('/public/imgpropiedades/'+propiedad.imagenes[i], (err) => {
 				  if (err) throw err;
 				});
 			};
@@ -130,12 +130,14 @@ router.post('/edit/propiedad',ensureAuthenticated,upload.array('images',5),funct
 	var id = req.body._id;
 	var direccion = req.body.direccion;
 	var categoria = req.body.categoria;
+	var subcategoria = req.body.subcategoria;
 	var precio = req.body.precio;
 	var descripcion = req.body.descripcion;
 
 	req.checkBody('direccion','Necesita una Dirección').notEmpty();
 	req.checkBody('categoria', 'Necesita una Categoria').notEmpty();
   	req.checkBody('precio', 'Necesita una Precio').notEmpty();
+	req.checkBody('subcategoria', 'Necesita una SubCategoria').notEmpty();  	
 
   	var errors = req.validationErrors();
 
@@ -145,7 +147,7 @@ router.post('/edit/propiedad',ensureAuthenticated,upload.array('images',5),funct
   		})
   	} else{
 
-      Propiedades.updatePropiedad(id,direccion,categoria,precio,descripcion,function(err,status){
+      Propiedades.updatePropiedad(id,direccion,categoria,subcategoria,precio,descripcion,function(err,status){
         if(err){
           res.render('propiedades',{'error':'Hubo un error, pruebe nuevamente en unos minutos'});
         }
