@@ -94,7 +94,7 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 		else{
 			console.log(propiedad);
 			for (var i = propiedad.imagenes.length - 1; i >= 0; i--) {
-				fs.unlink('/public/imgpropiedades/'+propiedad.imagenes[i], (err) => {
+				fs.unlink('/imgpropiedades/'+propiedad.imagenes[i], (err) => {
 				  if (err) throw err;
 				});
 			};
