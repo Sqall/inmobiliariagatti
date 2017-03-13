@@ -35,50 +35,52 @@ block content
         option(title="Lote") Lote
      .form-group
       label(for="subcategoria") Sub-Categoria
-      if (item.categoria =='Campo')
-        select.selectpicker(name="subcategoria" id="subcategoria")
-         if item.subcategoria == 'Quinta'
-          option(title="Quinta" selected) Quinta
-         else
-          option(title="") Quinta
-         if item.subcategoria == 'Estancia'
-          option(title="Estancia" selected) Estancia
-         else
-          option(title="Estancia") Estancia
-         if item.subcategoria == 'Chacra'
-          option(title="Chacra" selected) Chacra
-         else
-          option(title="Chacra") Chacra
-      else
-        select.selectpicker(name="subcategoria" id="subcategoria")
-         if item.subcategoria == 'Departamento'
-          option(title="Departamento" selected) Departamento
-         else
-          option(title="") Departamento
-         if item.subcategoria == 'Duplex'
-          option(title="Duplex" selected) Duplex
-         else
-          option(title="Duplex") Duplex
-         if item.subcategoria == 'Casa'
-          option(title="Casa" selected) Casa
-         else
-          option(title="Casa") Casa
-         if item.subcategoria == 'Chalet'
-           option(title="Chalet" selected) Chalet
-         else
-          option(title="Chalet") Chalet
-         if item.subcategoria == 'Oficina'
-          option(title="Oficina" selected) Oficina
-         else
-          option(title="Oficina") Oficina
-         if item.subcategoria == 'Local'
-          option(title="Local" selected) Local
-         else
-          option(title="Local") Local
-         if item.subcategoria == 'Galpon'
-          option(title="Galpon" selected) Galpon
-         else
-          option(title="Galpon") Galpon
+      if (item.categoria != 'Arrendamiento')
+       if (item.categoria != 'Lote')
+        if (item.categoria =='Campo')
+          select.selectpicker(name="subcategoria" id="subcategoria")
+           if item.subcategoria == 'Quinta'
+            option(title="Quinta" selected) Quinta
+           else
+            option(title="") Quinta
+           if item.subcategoria == 'Estancia'
+            option(title="Estancia" selected) Estancia
+           else
+            option(title="Estancia") Estancia
+           if item.subcategoria == 'Chacra'
+            option(title="Chacra" selected) Chacra
+           else
+            option(title="Chacra") Chacra
+        else
+          select.selectpicker(name="subcategoria" id="subcategoria")
+           if item.subcategoria == 'Departamento'
+            option(title="Departamento" selected) Departamento
+           else
+            option(title="") Departamento
+           if item.subcategoria == 'Duplex'
+            option(title="Duplex" selected) Duplex
+           else
+            option(title="Duplex") Duplex
+           if item.subcategoria == 'Casa'
+            option(title="Casa" selected) Casa
+           else
+            option(title="Casa") Casa
+           if item.subcategoria == 'Chalet'
+             option(title="Chalet" selected) Chalet
+          else
+            option(title="Chalet") Chalet
+           if item.subcategoria == 'Oficina'
+            option(title="Oficina" selected) Oficina
+           else
+            option(title="Oficina") Oficina
+           if item.subcategoria == 'Local'
+            option(title="Local" selected) Local
+           else
+            option(title="Local") Local
+           if item.subcategoria == 'Galpon'
+            option(title="Galpon" selected) Galpon
+           else
+            option(title="Galpon") Galpon
      .form-group
       label(for="Precio") Precio
       input.form-control(type="number" min="0" step="0.01" id="precio" name="precio" value="#{item.precio}")
