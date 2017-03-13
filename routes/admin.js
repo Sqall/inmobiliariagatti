@@ -94,7 +94,7 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 		else{
 			console.log(propiedad);
 			for (var i = propiedad.imagenes.length - 1; i >= 0; i--) {
-				fs.unlink('./imgpropiedades/'+propiedad.imagenes[i], (err) => {
+				fs.unlink('imgpropiedades/'+propiedad.imagenes[i], (err) => {
 				  if (err) throw err;
 				});
 			};
@@ -113,7 +113,7 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 });
 
 router.post('/borrar/imagen/:prop/:id',ensureAuthenticated,function(req,res,next){
-	fs.unlink('./imgpropiedades/'+req.params.id);
+	fs.unlink('imgpropiedades/'+req.params.id);
 	Propiedades.deleteImage(req.params.prop,req.params.id,function(err){
 		if(err){
 			res.render('admin',{'error':'Hubo un error, pruebe nuevamente'});
