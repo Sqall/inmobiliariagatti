@@ -92,11 +92,15 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 			res.render('admin',{'error':'Hubo un error, pruebe nuevamente'});
 		}
 		else{
-			console.log(propiedad);
 			for (var i = propiedad.imagenes.length - 1; i >= 0; i--) {
-				fs.unlink('imgpropiedades/'+propiedad.imagenes[i], (err) => {
-				  if (err) throw err;
-				});
+				fs.stat(propiedad.imagenes[i],function(err,stats){
+					if (err) {
+						res.redirect('/propiedades',{'error':'Imagen no encontrada'});
+					}
+					else{
+						fs.unlink('../public/imgpropiedades/'+propiedad.imagenes[i]);
+					}
+				})				
 			};
 		}
 	});
@@ -113,7 +117,15 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 });
 
 router.post('/borrar/imagen/:prop/:id',ensureAuthenticated,function(req,res,next){
-	fs.unlink('imgpropiedades/'+req.params.id);
+	fs.stat(req.params.id,function(err,stats){
+		if (err){
+			res.render('admin',{'error':'Hubo un error, pruebe nuevamente'});
+		}
+		else{
+			fs.unlink('../public/imgpropiedades/'+req.params.id);	
+		}
+	});
+
 	Propiedades.deleteImage(req.params.prop,req.params.id,function(err){
 		if(err){
 			res.render('admin',{'error':'Hubo un error, pruebe nuevamente'});

@@ -28,7 +28,8 @@ router.get('/mostrar/:id',function(req,res,next){
 });
 
 router.get('/buscar/:categoria/:subcategoria',function(req,res,next){
-  Propiedades.getPropiedadesbyCategoria(req.params.categoria,req.params.subcategoria,function(err,propiedades){
+  Propiedades.getPropiedadesbyCategoria(req.params.subcategoria,function(err,propiedades){
+    console.log(propiedades);
     if(err){
       res.render('propiedades',{'error':'Hubo un error, pruebe nuevamente en unos minutos'});
     }

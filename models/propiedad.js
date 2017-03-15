@@ -18,7 +18,7 @@ var PropiedadSchema = mongoose.Schema({
 		type:String
 	},
 	precio:{
-		type:Number
+		type:String
 	},
 	descripcion:{
 		type:String
@@ -46,9 +46,9 @@ module.exports.getPropiedades = function(text,callback){
 	});
 };
 
-//Agregar Categoria ya que Alquiler y Propiedad usan lo mismo
-module.exports.getPropiedadesbyCategoria = function(categoria,subcategoria,callback){
-	Propiedad.find({'categoria':categoria,'subcategoria':subcategoria},function(err,propiedadades){
+//Subcategorias difieren en todos
+module.exports.getPropiedadesbyCategoria = function(subcategoria,callback){
+	Propiedad.find({'subcategoria':subcategoria},function(err,propiedadades){
 		if(err){
 			return callback(err);
 		}
@@ -115,8 +115,7 @@ module.exports.addImage = function(id,imageid,callback){
 	});
 };
 
-/************	MODIFICIAR	***********/
-module.exports.updatePropiedad = function(id,address,cat,price,descrip,callback){
+module.exports.updatePropiedad = function(id,address,cat,subcat,price,descrip,callback){
 	Propiedad.findOne({'_id':id},function(err,doc){
 		if(err){
 			return callback(err);
@@ -125,6 +124,7 @@ module.exports.updatePropiedad = function(id,address,cat,price,descrip,callback)
 			doc.direccion = address;
 			doc.precio = price;
 			doc.categoria = cat;
+			doc.subcategoria = subcat;
 			doc.descripcion = descrip;
 			doc.save();
 			return callback(null,'success');
