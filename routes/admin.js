@@ -93,7 +93,7 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 		}
 		else{
 			for (var i = propiedad.imagenes.length - 1; i >= 0; i--) {
-				fs.stat(propiedad.imagenes[i],function(err,stats){
+				fs.stat('../public/imgpropiedades/'+propiedad.imagenes[i],function(err,stats){
 					if (err) {
 						res.redirect('/propiedades',{'error':'Imagen no encontrada'});
 					}
@@ -117,24 +117,25 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 });
 
 router.post('/borrar/imagen/:prop/:id',ensureAuthenticated,function(req,res,next){
-	fs.stat(req.params.id,function(err,stats){
+	fs.stat('./public/imgpropiedades/'+req.params.id,function(err,stats){
 		if (err){
-			res.render('admin',{'error':'Hubo un error, pruebe nuevamente'});
-		}
-		else{
-			fs.unlink('../public/imgpropiedades/'+req.params.id);	
-		}
-	});
-
-	Propiedades.deleteImage(req.params.prop,req.params.id,function(err){
-		if(err){
-			res.render('admin',{'error':'Hubo un error, pruebe nuevamente'});
-		}
-		else{
-			req.flash('sucess','Imagen Borrada');
+			req.flash('error','La imagen no se encuentra.');
 			res.redirect('/admin/edit/propiedad/'+req.params.prop);
 		}
-	});
+		else{			
+			fs.unlink('./public/imgpropiedades/'+req.params.id);
+			Propiedades.deleteImage(req.params.prop,req.params.id,function(err){
+				if(err){
+					req.flash('error','Hubo un problema, intente nuevamente.');					
+					res.redirect('/admin/edit/propiedad/'+req.params.prop);
+				}
+				else{
+					req.flash('sucess','Imagen Borrada');
+					res.redirect('/admin/edit/propiedad/'+req.params.prop);
+				}
+			});
+		}
+	});	
 });
 
 router.post('/edit/propiedad',ensureAuthenticated,upload.array('images',5),function(req,res,next){
