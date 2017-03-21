@@ -4,20 +4,9 @@ var multer = require('multer');
 var upload = multer({ dest: './public/imgpropiedades' });
 const fs = require('fs');
 
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://hermangatti:gattipass@ds113668.mlab.com:13668/inmobiliariahermangatti');
-var conn = mongoose.connection;
-var gfs;
-
-var Grid = require("gridfs-stream");
-Grid.mongo = mongoose.mongo;
-
-
-//CONNECT MODELS
-//VAR <MODEL> PARA LLAMADOS A LA DB
 var Propiedades = require('../models/propiedad');
 
+//VAR <MODEL> PARA LLAMADOS A LA DB
 
 /* GET home page. */
 router.get('/',ensureAuthenticated, function(req, res, next) {
@@ -47,7 +36,15 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
 	var precio = req.body.precio;
 	var descripcion = req.body.descripcion;
 	var images = [];
-	gfs = Grid(conn.db);
+	var storage = multer.diskStorage({
+		destination: function (req, file, cb) {
+		    cb(null, './public/imgpropiedades')
+		},
+		filename: function (req, file, cb) {
+		    cb(null, file.filename)
+		}
+	});			 
+	var upload = multer({ storage: storage });
 	if (req.files){
 		for (var i = 0, len = req.files.length; i < len; i++) {
 		  images.push(req.files[i].filename);		  
@@ -55,25 +52,13 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
 	}
 	else{
 		images.push("noimage.png");
-	}
-	if (req.files){
-		for (var i = 0, len = req.files.length; i < len; i++) {
-			var writestream = gfs.createWriteStream({
-		      filename: req.files[i].filename
-		    });
-		    //
-		    // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
-		    fs.createReadStream("./public/imgpropiedades/" + req.files[i].filename)
-		      .on("end", function(){fs.unlink("./public/imgpropiedades/"+ req.files[i].filename, function(err){res.send("success")})})
-		        .on("err", function(){res.send("Error uploading image")})
-		          .pipe(writestream);
-		}		
-	}
+	}	
 
 	req.checkBody('direccion','Necesita una Dirección').notEmpty();
   	req.checkBody('categoria', 'Necesita una Categoria').notEmpty();
   	req.checkBody('descripcion', 'Necesita una Descripción').notEmpty();
   	req.checkBody('precio', 'Necesita una Precio').notEmpty();
+
   	var errors = req.validationErrors();
 
   	if(errors){
