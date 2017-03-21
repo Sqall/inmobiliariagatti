@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
-mongoose.connect('mongodb://hermangatti:gattipass@ds113668.mlab.com:13668/inmobiliariahermangatti');
-
-var db = mongoose.connection;
+//mongoose.connect('mongodb://hermangatti:gattipass@ds113668.mlab.com:13668/inmobiliariahermangatti');
+//var db = mongoose.connection;
 
 var PropiedadSchema = mongoose.Schema({
 	categoria:{
