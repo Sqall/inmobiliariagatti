@@ -35,16 +35,7 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
 	var subcategoria = req.body.subcategoria;
 	var precio = req.body.precio;
 	var descripcion = req.body.descripcion;
-	var images = [];
-	var storage = multer.diskStorage({
-		destination: function (req, file, cb) {
-		    cb(null, './public/imgpropiedades')
-		},
-		filename: function (req, file, cb) {
-		    cb(null, file.filename)
-		}
-	});			 
-	var upload = multer({ storage: storage });
+	var images = [];				 
 	if (req.files){
 		for (var i = 0, len = req.files.length; i < len; i++) {
 		  images.push(req.files[i].filename);		  
