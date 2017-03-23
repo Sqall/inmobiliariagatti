@@ -9,6 +9,14 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/imgpropiedades')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.filename)
+    }
+  });
 var upload = multer({dest:'./public/imgpropiedades'});
 var flash = require('connect-flash');
 var bcrypt =require('bcryptjs');

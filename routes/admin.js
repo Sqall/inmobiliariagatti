@@ -4,6 +4,13 @@ var multer = require('multer');
 var upload = multer({ dest: './public/imgpropiedades' });
 const fs = require('fs');
 
+var mongoose = require('mongoose');
+//mongoose.connect('mongodb://hermangatti:gattipass@ds113668.mlab.com:13668/inmobiliariahermangatti');
+
+var Grid = require('gridfs-stream');
+var GridFS = Grid(mongoose.connection.db, mongoose.mongo);
+
+
 var Propiedades = require('../models/propiedad');
 
 //VAR <MODEL> PARA LLAMADOS A LA DB
@@ -43,7 +50,15 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
 	}
 	else{
 		images.push("noimage.png");
-	}	
+	}
+	if (req.files){
+	    var writestream = GridFS.createWriteStream({
+	        filename: req.files[0].filename
+	    });
+	    writestream.on('close', function (file) {
+	      callback(null, file);
+	    });
+    }
 
 	req.checkBody('direccion','Necesita una Dirección').notEmpty();
   	req.checkBody('categoria', 'Necesita una Categoria').notEmpty();
