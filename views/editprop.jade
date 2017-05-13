@@ -82,39 +82,39 @@ block content
          else
           option(title="Local") Local
          if item.subcategoria == 'Galpon'
-          option(title="Galpon" selected) Galpon
+          option(title="galpon" selected) Galpon
          else
-          option(title="Galpon") Galpon
+          option(title="galpon") Galpon
       if (item.categoria == 'Propiedad')
        select.selectpicker(name="subcategoria" id="subcategoria")
          if item.subcategoria == 'Departamento'
-          option(title="Departamento" selected) Departamento
+          option(title="departamento" selected) Departamento
          else
-          option(title="") Departamento
+          option(title="departamento") Departamento
          if item.subcategoria == 'Duplex'
-          option(title="Duplex" selected) Duplex
+          option(title="duplex" selected) Duplex
          else
-          option(title="Duplex") Duplex
+          option(title="duplex") Duplex
          if item.subcategoria == 'Casa'
-          option(title="Casa" selected) Casa
+          option(title="casa" selected) Casa
          else
-          option(title="Casa") Casa
+          option(title="casa") Casa
          if item.subcategoria == 'Chalet'
-           option(title="Chalet" selected) Chalet
+           option(title="chalet" selected) Chalet
          else
-          option(title="Chalet") Chalet
+          option(title="chalet") Chalet
          if item.subcategoria == 'Oficina'
-          option(title="Oficina" selected) Oficina
+          option(title="oficina" selected) Oficina
          else
-          option(title="Oficina") Oficina
+          option(title="oficina") Oficina
          if item.subcategoria == 'Local'
-          option(title="Local" selected) Local
+          option(title="local" selected) Local
          else
-          option(title="Local") Local
-         if item.subcategoria == 'Galpon'
-          option(title="Galpon" selected) Galpon
+          option(title="local") Local
+         if item.subcategoria == 'galpon'
+          option(title="galpon" selected) Galpon
          else
-          option(title="Galpon") Galpon
+          option(title="galpon") Galpon
      .form-group
       label(for="Precio") Precio
       input.form-control(type="text" id="precio" name="precio" value="#{item.precio}")

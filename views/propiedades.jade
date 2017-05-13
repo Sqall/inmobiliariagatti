@@ -116,7 +116,6 @@ block content
          span.glyphicon.glyphicon-arrow-right
   div.col-lg-9
    if (propiedades)
-    p #{propiedades}
     each propiedad, i in propiedades
      a(href='/propiedades/mostrar/#{propiedad._id}')
       div(class="boxinfo")
