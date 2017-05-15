@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
         cb(null, file.filename)
     }
   });
-var upload = multer({dest:'./public/imgpropiedades'});
+var upload = multer({storage:storage});
 var flash = require('connect-flash');
 var bcrypt =require('bcryptjs');
 var moment = require('moment');
