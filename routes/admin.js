@@ -51,14 +51,14 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
 	else{
 		images.push("noimage.png");
 	}
-	if (req.files){
+	/*if (req.files){
 	    var writestream = GridFS.createWriteStream({
 	        filename: req.files[0].filename
 	    });
 	    writestream.on('close', function (file) {
 	      callback(null, file);
 	    });
-    }
+    }*/
 
 	req.checkBody('direccion','Necesita una Dirección').notEmpty();
   	req.checkBody('categoria', 'Necesita una Categoria').notEmpty();
