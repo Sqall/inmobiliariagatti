@@ -62,7 +62,6 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
 
 	req.checkBody('direccion','Necesita una Dirección').notEmpty();
   	req.checkBody('categoria', 'Necesita una Categoria').notEmpty();
-  	req.checkBody('descripcion', 'Necesita una Descripción').notEmpty();
   	req.checkBody('precio', 'Necesita una Precio').notEmpty();
 
   	var errors = req.validationErrors();
