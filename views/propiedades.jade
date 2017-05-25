@@ -82,7 +82,7 @@ block content
         if sub == "galpon"
          span.glyphicon.glyphicon-arrow-right
        li
-        a(href="/propiedades/buscar/propiedad/Oficina") Oficina
+        a(href="/propiedades/buscar/propiedad/oficina") Oficina
         if sub == "oficina"
          span.glyphicon.glyphicon-arrow-right
       if cate == "alquiler"
@@ -114,20 +114,40 @@ block content
         a(href="/propiedades/buscar/alquiler/oficina") Oficina
         if sub == "oficina"
          span.glyphicon.glyphicon-arrow-right
-  div.col-lg-9
-   if (propiedades)
-    each propiedad, i in propiedades
-     a(href='/propiedades/mostrar/#{propiedad._id}')
-      div(class="boxinfo")
-       .propiedad
-        if propiedad.imagenes.length !=0
-         img.img-responsive(src="/imgpropiedades/#{propiedad.imagenes[0]}")
-        else
-         img.img-responsive(src="/images/no-image.png")
-        p.subtitulo <strong>Direccion:</strong> #{propiedad.direccion}
-        p.subtitulo <strong>Tipo:</strong> #{propiedad.subcategoria}
-        p.subtitulo <strong>Precio:</strong> #{propiedad.precio} $
-    if (propiedades.length == 0)
-     p Lo sentimos, no hay propiedades de la categoria elegida.
-   else
-    p Lo sentimos, no hay propiedades de la categoria elegida.
+  if !lote
+   if !arrendamiento
+    div.col-lg-9
+     if (propiedades)
+      each propiedad, i in propiedades
+       a(href='/propiedades/mostrar/#{propiedad._id}')
+        div(class="boxinfo")
+         .propiedad
+          if propiedad.imagenes.length !=0
+           img.img-responsive(src="/imgpropiedades/#{propiedad.imagenes[0]}")
+          else
+           img.img-responsive(src="/images/no-image.png")
+          p.subtitulo <strong>Direccion:</strong> #{propiedad.direccion}
+          p.subtitulo <strong>Tipo:</strong> #{propiedad.subcategoria}
+          p.subtitulo <strong>Precio:</strong> #{propiedad.precio} $
+      if (propiedades.length == 0)
+       p Lo sentimos, no hay propiedades de la categoria elegida.
+     else
+      p Lo sentimos, no hay propiedades de la categoria elegida.
+  else
+   div.col-lg-12
+     if (propiedades)
+      each propiedad, i in propiedades
+       a(href='/propiedades/mostrar/#{propiedad._id}')
+        div(class="boxinfo")
+         .propiedad
+          if propiedad.imagenes.length !=0
+           img.img-responsive(src="/imgpropiedades/#{propiedad.imagenes[0]}")
+          else
+           img.img-responsive(src="/images/no-image.png")
+          p.subtitulo <strong>Direccion:</strong> #{propiedad.direccion}
+          p.subtitulo <strong>Tipo:</strong> #{propiedad.subcategoria}
+          p.subtitulo <strong>Precio:</strong> #{propiedad.precio} $
+      if (propiedades.length === 0)
+       p Lo sentimos, no hay propiedades de la categoria elegida.
+     else
+      p Lo sentimos, no hay propiedades de la categoria elegida.
