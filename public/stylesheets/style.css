@@ -279,7 +279,12 @@ hr{
 
 .padeo{
 	padding-left: 4%;
-	padding-right: 4%
+	padding-right: 4%;
+}
+
+.owlpadding{
+	padding-right: 10%;
+	padding-left: 10%;	
 }
 
 .infobutton{

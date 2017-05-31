@@ -6,7 +6,7 @@ block content
    if item
     .item
      div.row
-      div.col-lg-12
+      div.col-lg-12.owlpadding
        if item.imagenes.length != 0
         div(id="carousel-example-generic" class="carousel slide" data-ride="carousel")
          ol.carousel-indicators
@@ -19,11 +19,11 @@ block content
           each imagen,i in item.imagenes
            if (i == 0)
             div(class="item active")
-             img.img-responsive(src="/imgpropiedades/#{imagen}")
+             img.rounded.img-responsive(src="/imgpropiedades/#{imagen}")
              <!--div.carousel-caption Caption of img -->
            else
             div(class="item")
-             img.img-responsive(src="/imgpropiedades/#{imagen}")
+             img.rounded.img-responsive(src="/imgpropiedades/#{imagen}")
              <!--div.carousel-caption Caption of img -->
          <!-- Controls -->
          a.left.carousel-control(href="#carousel-example-generic" role="button" data-slide="prev")
@@ -33,7 +33,7 @@ block content
            span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
            span.sr-only Next
        else
-        img.img-responsive(src="/images/no-image.png")
+        img.rounded.img-responsive(src="/images/no-image.png")
      div.row
       div.col-lg-12.propinfo
        p <strong>Descripcion:</strong> #{item.descripcion}
