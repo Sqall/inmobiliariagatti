@@ -157,7 +157,7 @@ ul.error li{
 
 #logocompania{
 	bottom: 5px;
-	margin: 9em 0 0em 0em;
+	margin: 4em 0 0em 3em;
 }
 
 .margin-top{
@@ -236,6 +236,10 @@ body{
 	margin-left: 0px;
 }
 
+.margin-30{
+	margin-right: 30px;
+	margin-left: 30px;
+}
 .titulo{
 	text-align: center;
 	font-size: 20px;
