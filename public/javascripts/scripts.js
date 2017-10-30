@@ -32,6 +32,9 @@ $(document).ready(function() {
 		        $("#subcategoria").append('<option>quinta</option>');
 		        $("#subcategoria").append('<option>estancia</option>');
 		        $("#subcategoria").append('<option>chacra</option>');
+		        $("#subcategoria").append('<option>agricolas</option>');
+		        $("#subcategoria").append('<option>mixto</option>');
+		        $("#subcategoria").append('<option>cria</option>');
 		        break;
 		    case 'Propiedad':
 		        $("#subcategoria").append('<option>departamento</option>');
