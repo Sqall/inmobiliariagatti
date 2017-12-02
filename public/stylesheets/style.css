@@ -1,3 +1,6 @@
+.contact{
+	background-color: red;
+}
 ul.success li{
 	padding:15px;
 	margin-bottom: 20px;
@@ -210,7 +213,15 @@ ul.error li{
 .about{
 	float: right;
 	margin-right: 10px;
-	font-size: 18px;	
+	font-size: 18px;
+}
+.about a {
+	color:blue;
+}
+.icono{
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 20px !important;
 }
 
 .logout{
@@ -260,11 +271,7 @@ body{
 	font-size: 15px;
 }
 
-span{
-	margin-left: 10px;
-	margin-right: 10px;
-	font-size: 15px;
-}
+
 
 .mapa{
 	padding-left: 8%;

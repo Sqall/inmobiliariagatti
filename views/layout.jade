@@ -7,6 +7,7 @@ html(lang='en')
     link(href='/stylesheets/owl.carousel.css', rel='stylesheet')
     link(href='/stylesheets/owl.transitions.css', rel='stylesheet')
     link(href='/stylesheets/owl.theme.css', rel='stylesheet')
+    link(href='/fonts/fontsaw/css/font-awesome.min.css' rel='stylesheet')
   body   
    div.container
     if user
@@ -22,10 +23,17 @@ html(lang='en')
         img(id="logocompania" src="/images/logo2.png").img-responsive.img-rounded
     .row
      .col-lg-6
-      p.telefono Tel: 0249 4436672 - Cel: 0249 154633127
+      i.icono(class="fa fa-phone" aria-hidden="true")   0249 4436672 - 154633127       
      .col-lg-6
       p.about
        a(href="/about") ¿Quiénes Somos?
+        i.icono(class="fa fa-info" aria-hidden="true")
+    .row
+     .col-lg-6      
+      i.icono(class="fa fa-map-marker" aria-hidden="true")  Av.Falucho 897       
+     .col-lg-6
+      p.about hermangatti@hotmail.com
+       i.icono(class="fa fa-envelope" aria-hidden="true")
     hr
     .row
      .navegador

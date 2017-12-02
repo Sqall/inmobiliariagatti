@@ -2,7 +2,14 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var upload = multer({ dest: './public/imgpropiedades' });
+var cloudinary = require('cloudinary');
 const fs = require('fs');
+
+cloudinary.config({ 
+  cloud_name: 'Gattidev', 
+  api_key: '167695282387732', 
+  api_secret: 'stxfgzblNBm-BUT2pTG1CLHqyGw' 
+});
 
 var mongoose = require('mongoose');
 //mongoose.connect('mongodb://hermangatti:gattipass@ds113668.mlab.com:13668/inmobiliariahermangatti');
@@ -45,7 +52,10 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
 	var images = [];				 
 	if (req.files){
 		for (var i = 0, len = req.files.length; i < len; i++) {
-		  images.push(req.files[i].filename);		  
+			console.log(req.files[i]);
+		  /*images.push(req.files[i].filename);
+		  cloudinary.v2.uploader.upload(req.files[i],
+    		function(error, result) {console.log(result)});*/
 		}
 	}
 	else{
@@ -65,13 +75,12 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
   	req.checkBody('precio', 'Necesita una Precio').notEmpty();
 
   	var errors = req.validationErrors();
-
+  	/*
   	if(errors){
   		res.render('newprop',{
   			"error":errors
   		})
   	} else{
-
       Propiedades.newPropiedad(direccion,categoria,subcategoria,precio,images,descripcion,function(err,status){
         if(err){
           res.render('propiedades',{'error':'Hubo un error, pruebe nuevamente en unos minutos'});
@@ -82,7 +91,7 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
           res.redirect('/admin/nuevapropiedad');
         }
       });
-  	}
+  	}*/
   });
 
 router.post('/new/imagen/:prop',ensureAuthenticated,upload.array('images',1),function(req,res,next){

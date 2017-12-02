@@ -26,8 +26,6 @@ var mongoose = require('mongoose');
 var nodemailer = require('nodemailer');
 var db = mongoose.connection;
 
-//pass website
-//6WvsHp4u16PQKne%lcAe
 
 //DEFINED ROUTES
 var routes = require('./routes/index');

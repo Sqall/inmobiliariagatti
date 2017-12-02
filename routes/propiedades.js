@@ -84,7 +84,7 @@ router.get('/Arrendamiento',function(req,res,next){
 });
 
 router.get('/Propiedad',function(req,res,next){
-  Propiedades.getPropiedades('Propiedad',function(err,propiedades){
+  Propiedades.getPropiedades('Propiedad',function(err,propiedades){    
     if (err){
       res.render('propiedades',{ error:'Hubo un error, pruebe nuevamente en unos minutos' });
     }
