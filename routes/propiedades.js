@@ -67,7 +67,8 @@ router.get('/Lote',function(req,res,next){
       res.render('propiedades',{ error:'Hubo un error, pruebe nuevamente en unos minutos' });
     }
     else{
-      res.render('propiedades', { propiedades: propiedades , lote:true});
+      if (propiedades.length > 0) res.render('propiedades', { propiedades: propiedades , lote:true});
+      else res.render('propiedades', { propiedades: propiedades , lote:false});
     }
   });
 });
@@ -78,7 +79,8 @@ router.get('/Arrendamiento',function(req,res,next){
       res.render('propiedades',{ error:'Hubo un error, pruebe nuevamente en unos minutos' });
     }
     else{
-      res.render('propiedades', { propiedades: propiedades , arrendamiento:true});
+      if (propiedades.length > 0) res.render('propiedades', { propiedades: propiedades , arrendamiento:true});
+      else res.render('propiedades', { propiedades: propiedades , arrendamiento:false, mensaje:'Actualmente disponemos con varios Campos en Arrendamientos cercanos a Tandil, su consulta no molesta.'});
     }
   });
 });
@@ -89,7 +91,8 @@ router.get('/Propiedad',function(req,res,next){
       res.render('propiedades',{ error:'Hubo un error, pruebe nuevamente en unos minutos' });
     }
     else{
-      res.render('propiedades', { propiedades: propiedades , propiedad:true});
+      if (propiedades.length > 0) res.render('propiedades', { propiedades: propiedades , propiedad:true});
+      else res.render('propiedades', { propiedades: propiedades , propiedad:false});
     }
   });
 });
