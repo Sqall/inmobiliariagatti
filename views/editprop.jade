@@ -126,8 +126,8 @@ block content
      button.btn.btn-success(type="submit") Editar
    .row.imgshow
     each img, i in item.imagenes
-     form(method="POST" action="/admin/borrar/imagen/#{item._id}/#{item.imagenes[i]}" onsubmit="return confirm('¿Seguro que quieres borrar esta imagen?')")
-      img(src="/imgpropiedades/#{item.imagenes[i]}").imgeditbox.img-responsive
+     form(method="POST" action="/admin/borrar/imagen/#{item._id}/#{item.imagenes_id[i]}" onsubmit="return confirm('¿Seguro que quieres borrar esta imagen?')")
+      img(src="#{item.imagenes[i]}").imgeditbox.img-responsive
       button(type="submit").btn.btn-danger Borrar
    .row.margin-top-50
     if item.imagenes.length <= 4

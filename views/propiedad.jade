@@ -19,11 +19,11 @@ block content
           each imagen,i in item.imagenes
            if (i == 0)
             div(class="item active")
-             img.rounded.img-responsive(src="/imgpropiedades/#{imagen}")
+             img.rounded.img-responsive(src="#{imagen}")
              <!--div.carousel-caption Caption of img -->
            else
             div(class="item")
-             img.rounded.img-responsive(src="/imgpropiedades/#{imagen}")
+             img.rounded.img-responsive(src="#{imagen}")
              <!--div.carousel-caption Caption of img -->
          <!-- Controls -->
          a.left.carousel-control(href="#carousel-example-generic" role="button" data-slide="prev")

@@ -1,15 +1,28 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var upload = multer({ dest: './public/imgpropiedades' });
-var cloudinary = require('cloudinary');
 const fs = require('fs');
 
+var cloudinary = require('cloudinary');
+var cloudinaryStorage = require('multer-storage-cloudinary');
+
 cloudinary.config({ 
-  cloud_name: 'Gattidev', 
-  api_key: '167695282387732', 
-  api_secret: 'stxfgzblNBm-BUT2pTG1CLHqyGw' 
+  cloud_name: 'inmobiliaria-gatti',
+  folder: 'Gattidev',
+  api_key: '167695282387732',
+  api_secret: 'stxfgzblNBm-BUT2pTG1CLHqyGw'
 });
+
+var storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'Gattidev',
+  allowedFormats: ['jpg', 'png'],
+  filename: function (req, file, cb) {
+    cb(undefined, file.name);
+  }
+});
+
+var parser = multer({ storage: storage });
 
 var mongoose = require('mongoose');
 //mongoose.connect('mongodb://hermangatti:gattipass@ds113668.mlab.com:13668/inmobiliariahermangatti');
@@ -42,46 +55,34 @@ router.get('/edit/propiedad/:id',ensureAuthenticated,function(req,res,next){
 	});
 });
 
-router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),function(req,res,next){
+router.post('/new/propiedad',ensureAuthenticated,parser.array('images',5),function(req,res,next){
 
 	var direccion = req.body.direccion;
 	var categoria = req.body.categoria;
 	var subcategoria = req.body.subcategoria;
 	var precio = req.body.precio;
 	var descripcion = req.body.descripcion;
-	var images = [];				 
+	var images = [];
+	var images_id = [];
 	if (req.files){
-		for (var i = 0, len = req.files.length; i < len; i++) {
-			console.log(req.files[i]);
-		  /*images.push(req.files[i].filename);
-		  cloudinary.v2.uploader.upload(req.files[i],
-    		function(error, result) {console.log(result)});*/
+		for (var i = 0, len = req.files.length; i < len; i++) {			
+		  images.push(req.files[i].url);
+		  images_id.push(req.files[i].public_id);
 		}
 	}
 	else{
 		images.push("noimage.png");
 	}
-	/*if (req.files){
-	    var writestream = GridFS.createWriteStream({
-	        filename: req.files[0].filename
-	    });
-	    writestream.on('close', function (file) {
-	      callback(null, file);
-	    });
-    }*/
-
 	req.checkBody('direccion','Necesita una Dirección').notEmpty();
   	req.checkBody('categoria', 'Necesita una Categoria').notEmpty();
   	req.checkBody('precio', 'Necesita una Precio').notEmpty();
-
   	var errors = req.validationErrors();
-  	/*
   	if(errors){
   		res.render('newprop',{
   			"error":errors
   		})
   	} else{
-      Propiedades.newPropiedad(direccion,categoria,subcategoria,precio,images,descripcion,function(err,status){
+      Propiedades.newPropiedad(direccion,categoria,subcategoria,precio,images,images_id,descripcion,function(err,status){
         if(err){
           res.render('propiedades',{'error':'Hubo un error, pruebe nuevamente en unos minutos'});
         }
@@ -91,20 +92,21 @@ router.post('/new/propiedad',ensureAuthenticated,upload.array('images',5),functi
           res.redirect('/admin/nuevapropiedad');
         }
       });
-  	}*/
+  	}
   });
 
-router.post('/new/imagen/:prop',ensureAuthenticated,upload.array('images',1),function(req,res,next){
+router.post('/new/imagen/:prop',ensureAuthenticated,parser.array('images',1),function(req,res,next){
 	var propiedad = req.params.prop;
-	var images = req.files[0].filename;
-	Propiedades.addImage(propiedad,images,function(err,status){
-	  if(err){
-	    req.flash('error', err);
-	    res.redirect('/admin/edit/propiedad/'+propiedad);
+	var images = req.files[0].url;
+	var images_id = req.files[0].public_id;
+	Propiedades.addImage(propiedad,images,images_id,function(resp){
+	  if(resp == "sucess"){
+	  	req.flash('success','Imagen agregada exitosamente');
+		res.redirect('/admin/edit/propiedad/'+propiedad);	    
 	  }
 	  else{
-	    req.flash('success','Imagen agregada exitosamente');
-		res.redirect('/admin/edit/propiedad/'+propiedad);
+	    req.flash('error',resp);
+	    res.redirect('/admin/edit/propiedad/'+propiedad);
 	  }
 	});
 });
@@ -115,53 +117,37 @@ router.post('/borrar/propiedad/:id',ensureAuthenticated,function(req,res,next){
 			res.render('admin',{'error':'Hubo un error, pruebe nuevamente'});
 		}
 		else{
-			for (var i = propiedad.imagenes.length - 1; i >= 0; i--) {
-				fs.stat('../public/imgpropiedades/'+propiedad.imagenes[i],function(err,stats){
-					if (err) {
-						res.redirect('/propiedades',{'error':'Imagen no encontrada'});
+			var arreglo_imgs = [];
+			for (var i = propiedad.imagenes_id.length-1; i >= 0; i--) {
+				arreglo_imgs.push(propiedad.imagenes_id[i]);
+			};
+			Propiedades.deletePropiedad(req.params.id,function(err,status){
+					if (err){
+						res.render('propiedades',{'error': 'Hubo un error, pruebe nuevamente en unos minutos'});
 					}
 					else{
-						fs.unlink('../public/imgpropiedades/'+propiedad.imagenes[i]);
+						cloudinary.v2.api.delete_resources(arreglo_imgs,function(error, result){
+							req.flash('success','Propiedad Borrada');
+							res.location('/propiedades');
+							res.redirect('/propiedades');	
+						});						
 					}
-				})				
-			};
-		}
-	});
-	Propiedades.deletePropiedad(req.params.id,function(err,status){
-		if (err){
-			res.render('propiedades',{'error': 'Hubo un error, pruebe nuevamente en unos minutos'});
-		}
-		else{
-			req.flash('success','Propiedad Borrada');
-			res.location('/propiedades');
-			res.redirect('/propiedades');
+				});			
 		}
 	});
 });
 
-router.post('/borrar/imagen/:prop/:id',ensureAuthenticated,function(req,res,next){
-	fs.stat('./public/imgpropiedades/'+req.params.id,function(err,stats){
-		if (err){
-			req.flash('error','La imagen no se encuentra.');
-			res.redirect('/admin/edit/propiedad/'+req.params.prop);
-		}
-		else{			
-			fs.unlink('./public/imgpropiedades/'+req.params.id);
-			Propiedades.deleteImage(req.params.prop,req.params.id,function(err){
-				if(err){
-					req.flash('error','Hubo un problema, intente nuevamente.');					
-					res.redirect('/admin/edit/propiedad/'+req.params.prop);
-				}
-				else{
-					req.flash('sucess','Imagen Borrada');
-					res.redirect('/admin/edit/propiedad/'+req.params.prop);
-				}
-			});
-		}
-	});	
+router.post('/borrar/imagen/:prop/Gattidev/:id',ensureAuthenticated,function(req,res,next){
+	
+	cloudinary.v2.api.delete_resources(['Gattidev/'+req.params.id],function(error, result){
+		req.flash('success','Imagen Borrada');
+		Propiedades.deleteImage(req.params.prop,req.params.id,function(error,result){});
+		res.location('/admin/edit/propiedad/'+req.params.prop);
+		res.redirect('/admin/edit/propiedad/'+req.params.prop);
+	});
 });
 
-router.post('/edit/propiedad',ensureAuthenticated,upload.array('images',5),function(req,res,next){
+router.post('/edit/propiedad',ensureAuthenticated,parser.array('images',5),function(req,res,next){
 
 	var id = req.body._id;
 	var direccion = req.body.direccion;
@@ -189,8 +175,8 @@ router.post('/edit/propiedad',ensureAuthenticated,upload.array('images',5),funct
         }
         else{
           req.flash('success','Propiedad Modificada');
-          res.location('/admin');
-          res.redirect('/admin');
+          res.location('/admin/edit/propiedad/'+id);
+          res.redirect('/admin/edit/propiedad/'+id);
         }
       });
   	}

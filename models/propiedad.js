@@ -21,7 +21,8 @@ var PropiedadSchema = mongoose.Schema({
 	descripcion:{
 		type:String
 	},
-	imagenes: []
+	imagenes: [],
+	imagenes_id:[]
 });
 
 var Propiedad = module.exports = mongoose.model('Propiedad',PropiedadSchema);
@@ -63,7 +64,7 @@ module.exports.getPropiedadbyId = function(id,callback){
 	});
 };
 
-module.exports.newPropiedad = function(address,cat,subcat,price,images,descrip,callback){
+module.exports.newPropiedad = function(address,cat,subcat,price,images,images_id,descrip,callback){
 
 	var query = new Propiedad({
 		categoria:cat,
@@ -71,6 +72,7 @@ module.exports.newPropiedad = function(address,cat,subcat,price,images,descrip,c
 		direccion:address,
 		precio:price,
 		imagenes:images,
+		imagenes_id:images_id,
 		descripcion:descrip
 	});
 	
@@ -92,23 +94,23 @@ module.exports.deletePropiedad = function(id,callback){
 };
 
 module.exports.deleteImage = function(id,imageid,callback){
-	Propiedad.findOneAndUpdate({'_id':id},{$pull: {imagenes: imageid}},function(err){
+	Propiedad.findOneAndUpdate({'_id':id},{$pull: {imagenes: {$regex:imageid},imagenes_id:{$regex:imageid}}},function(err){
 		if(err){
-			return callback(err);
+			return err;
 		}
 		else{
-			return callback(null,'sucess');
+			return 'sucess';
 		}
 	});
 };
 
-module.exports.addImage = function(id,imageid,callback){
-	Propiedad.update({'_id':id},{$push:{imagenes:imageid}},function(err){
+module.exports.addImage = function(id,image,imageid,callback){
+	Propiedad.update({'_id':id},{$push:{imagenes:image,imagenes_id:imageid}},function(err){
 		if(err){
 			return callback(err);
 		}
 		else{
-			return callback(null,'sucess');
+			return callback('sucess');
 		}
 	});
 };
