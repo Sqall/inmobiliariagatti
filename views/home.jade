@@ -30,7 +30,7 @@ block content
        div(class="boxinfo")
         .propiedad
          if propiedad.imagenes.length != 0
-          img.img-responsive.img-rounded(src="/imgpropiedades/#{propiedad.imagenes[0]}")
+          img.img-responsive.img-rounded(src="#{propiedad.imagenes[0]}")
          else
           img.img-responsive.img-rounded(src="/images/no-image.png")
          p Categoria: #{propiedad.categoria}
