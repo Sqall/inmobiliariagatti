@@ -153,7 +153,7 @@ block content
        each propiedad, i in propiedades
         a(href='/propiedades/mostrar/#{propiedad._id}')
          div(class="boxinfo")
-          .propiedad
+          .propiedad  
            if propiedad.imagenes.length !=0
             img.img-responsive(src="#{propiedad.imagenes[0]}")
            else
