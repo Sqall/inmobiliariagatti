@@ -10,6 +10,19 @@ block content
      .form-group
       label(for="direccion") Dirección
       input.form-control(type="text" id="direccion" placeholder="Direccion" name="direccion" value='#{item.direccion}')
+      <h1>#{item}</h1>
+      .form-group
+        label.control-label.col-sm-2(for="categoria") Categoria      
+        select.selectpicker(name="categoria" id="categoria")
+          option(title="arrendamiento") Arrendamiento
+          option(title="campo") Campo
+          option(title="alquiler") Alquiler
+          option(title="propiedad") Propiedad
+          option(title="lote") Lote
+      .form-group
+        label.control-label.col-sm-2(for="subcategoria") Sub-Categoria      
+        select.selectpicker(name="subcategoria" id="subcategoria")
+          option(title="#{item.categoria}") Vacio
      .form-group
       label(for="categoria") Categoria
       select.selectpicker(name="categoria" id="categoria")
