@@ -8,6 +8,9 @@ block content
    .row
     form( method="post", action='/admin/edit/propiedad', enctype='multipart/form-data')
      .form-group
+      label(for="direccion") Dirección
+      input.form-control(type="text" id="direccion" placeholder="Direccion" name="direccion" value='#{item.direccion}')
+     .form-group
       label(for="categoria") Categoria
       select.selectpicker(name="categoria" id="categoria")
        if (item.categoria == 'Arrendamiento')
